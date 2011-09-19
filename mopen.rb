@@ -194,9 +194,8 @@ end # def spec_mopen
 
 case $PROGRAM_NAME
   when __FILE__ then
-  when '/usr/bin/rspec' then
+  when /rspec\z/ then
     #$VERBOSE = true
     spec_mopen
   else
 end #case $PROGRAM_NAME
-
