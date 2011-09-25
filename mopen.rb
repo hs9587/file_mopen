@@ -22,13 +22,13 @@
 class File
   def self.mopen_with(fnames, hundlers, block)
     "fnames:#{fnames.inspect}, hundlers:#{hundlers.inspect}.\n".display if $VERBOSE
-    if fnames.size > 0 then
+    if fnames.size == 0 then
+      block.call *hundlers
+    else# if fnames.size == 0
       self.open(*(fnames.shift)) do |f|
         mopen_with fnames, hundlers << f, block
       end # self.open(*(fnames.shift)) do |f|
-    else# if fnames.size > 0
-      block.call *hundlers
-    end # if fnames.size > 0
+    end # if fnames.size == 0
   end # def self.mopen_with(fnames, hundlers, block)
   private_class_method :mopen_with
 
