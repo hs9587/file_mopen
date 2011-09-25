@@ -64,7 +64,7 @@ def spec_mopen
       end # context 'implementaion matters' do
 
       context 'one file' do
-        it 'should not rase error and receive file name' do
+        it 'should not raise error and receive file name' do
           File.should_receive(:open).with('file_0')
           lambda{ File.mopen('file_0'){ |h| }}.should_not raise_error
         end # it 'should not rase error and receive file name' do
@@ -132,7 +132,7 @@ end # RSpec::Matchers.define :be_closed do
           temps.each{ |t| t.close true }
         end # around(:each) do |example|
 
-        it 'should be open and shoud be closed' do
+        it 'should be open and should be closed' do
           @fnames.each{ |f| f.should be_closed }
           lambda do
             File.mopen(@fnames[0], [@fnames[1], 'a']) do
