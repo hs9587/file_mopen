@@ -154,12 +154,7 @@ end # RSpec::Matchers.define :be_closed do
       end # context 'two files' do
 
       it 'four files and should be closed when anything raised' do
-        temps = [
-          Tempfile.open('mopen_spec'), 
-          Tempfile.open('mopen_spec'),
-          Tempfile.open('mopen_spec'),
-          Tempfile.open('mopen_spec'),
-        ]
+        temps = (1..4).map{ Tempfile.open('mopen_spec') }
         fnames = temps.map{ |t| t.path }
         temps.each{ |t| t.close false }
 
