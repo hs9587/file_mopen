@@ -49,10 +49,10 @@ def spec_mopen
           raise_error(LocalJumpError, 'no block given')
       end # it 'with no block should not raise LocalJumpError: no block given'
 
-      it 'with no arguments shoule not raise ArgumentError' do
+      it 'with no arguments should not raise ArgumentError' do
         lambda{ subject.mopen }.should_not \
           raise_error(ArgumentError, /wrong number of arguments/)
-      end # it 'with no arguments shoule not raise ArgumentError' do
+      end # it 'with no arguments should not raise ArgumentError' do
 
       it{ lambda{ subject.mopen{} }.should_not raise_error }
 
@@ -140,7 +140,7 @@ end # RSpec::Matchers.define :be_closed do
             end # File.mopen(fnames[0], [fnames[1], 'a']) do
           end.should_not raise_error
           @fnames.each{ |f| f.should be_closed }
-        end # it 'should be open and shoud be closed' do
+        end # it 'should be open and should be closed' do
 
         it 'should be closed when anything raised' do
           lambda do
