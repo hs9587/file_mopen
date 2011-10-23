@@ -44,6 +44,12 @@ describe File do
       end # it 'should open with a block' do
     end # context 'a file' do
 
+class File
+  def closed?
+    inspect.end_with? ' (closed)>'
+  end # def closed?
+end # class File
+
     10.times do |i|
       context "#{i} files" do
         around(:each) do |example|
@@ -84,34 +90,32 @@ describe File do
           end # subject.mopen(*@fnames) do |*fs|
         end # it "should have #{i} open files" do
 
+        it "should have #{i} files, and should be closed streams" do
+          fs = []
+          subject.mopen(*@fnames){ |*fs_| fs = fs_}
+          "fs: #{fs.inspect}.\n".display if $VERBOSE
+          fs.each do |f|
+            lambda{ f.stat }.should raise_error(IOError,'closed stream')
+          end # fs.each do |f|
+        end # it "should have #{i} files, and should be closed streams" do
+
         it "should have #{i} files, and close these" do
           fs = []
           subject.mopen(*@fnames){ |*fs_| fs = fs_}
           fs.each{ |f| f.inspect.should be_end_with(' (closed)>') }
         end # it "should have #{i} files, and close these" do
-class File
-  def closed?
-    inspect.end_with? ' (closed)>'
-  end # def closed?
-end # class File
+
         it "should have #{i} files, and closed" do
           fs = []
           subject.mopen(*@fnames){ |*fs_| fs = fs_}
           fs.each{ |f| f.should be_closed }
         end # it "should have #{i} files, and closed" do
+
         it "should have #{i} non-closed files" do
           subject.mopen(*@fnames) do |*fs|
             fs.each{ |f| f.should_not be_closed }
           end # subject.mopen(*@fnames) do |*fs|
         end # it "should have #{i} non-closed files" do
-
-        it "should have #{i} files, and should be closed streams" do
-          fs = []
-          subject.mopen(*@fnames){ |*fs_| fs = fs_}
-          fs.each do|f|
-            lambda{ f.stat }.should raise_error(IOError,'closed stream')
-          end # fs.each do|f|
-        end # it "should have #{i} files, and should be closed streams" do
       end # context "#{i} files" do
     end # 10.times do |i|
   end # describe '#mopen' do
