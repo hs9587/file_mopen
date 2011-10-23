@@ -117,14 +117,14 @@ end # class File
           end # subject.mopen(*@fnames) do |*fs|
         end # it "should have #{i} non-closed files" do
 
-        it "should be closed if anything raised" do
+        it "should be closed when anything raised" do
           fs = []
           lambda do
             subject.mopen(*@fnames){ |*fs_| fs = fs_; raise 'anything' }
           end.should raise_error RuntimeError, 'anything'
           "fs: #{fs.inspect}.\n".display if $VERBOSE
           fs.each{ |f| f.should be_closed }
-        end # it "should be closed if anything raised" do
+        end # it "should be closed when anything raised" do
       end # context "#{i} files" do
     end # 10.times do |i|
   end # describe '#mopen' do
